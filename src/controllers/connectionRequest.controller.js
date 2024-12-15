@@ -66,7 +66,6 @@ const reviewRequest=async(req,res)=>{
         if (!allowedStatus.includes(status)) {
           return res.status(400).json({ messaage: "Status not allowed!" });
         }
-  
         const connectionRequest = await ConnectionRequest.findOne({
           _id: requestId,
           receiverUserId: loggedInUser._id,

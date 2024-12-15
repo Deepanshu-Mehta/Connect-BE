@@ -14,7 +14,6 @@ const AuthVerify = async(req, res,next)=>{
         }
 
         req.user = user;
-        // console.log(req.user);
         next();
     }catch(err){
         res.status(400).send("ERROR: " + err.message);
