@@ -1,7 +1,6 @@
 const User = require('../models/users.models.js');
 const {validateSignup, validateLogin} = require('../utils/validators');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const signup = async (req,res)=>{
     try {
       //Data Validation
@@ -58,8 +57,7 @@ const login = async(req,res)=>{
 const logout = async (req,res)=>{
     res.cookie("token", null, {
         expires: new Date(Date.now()),
-      });
-      res.send("Logout Successful!!");
+      }).send("Logout Successful!!");
 
 }
 module.exports = {signup, login, logout};

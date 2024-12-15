@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const authRouter = require('./routes/auth.routes');
+const profileRouter = require('./routes/profile.routes');
+const requestRouter = require('./routes/connectionRequest.routes');
 const userRouter = require('./routes/user.routes');
 
 // Route
@@ -18,7 +20,10 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/profile', profileRouter);
+app.use('/api/v1/request', requestRouter);
 app.use('/api/v1/user', userRouter);
+
 
 // Connect to the database, then start the server
 connectDB().then(() => {

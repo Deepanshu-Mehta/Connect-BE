@@ -25,4 +25,27 @@ const validateLogin = (req) => {
       throw new Error("Password cannot be empty");
     }
   };
-module.exports = {validateSignup, validateLogin};  
+
+const validateProfileData = (req)=>{
+  try{
+    const ALLOWED_FIELDS = ["firstName", "lastName", "age", "gender", "photoUrl", "about", "skills", "github", "linkedin"];
+    const isEditAllowed = Object.keys(req.body).every((field) =>
+      ALLOWED_FIELDS.includes(field)
+    );
+    if(!isEditAllowed){
+      throw new Error("Invalid Field");
+      }
+    // if(firstName.lenght < 3 || age <18 || !gender in ["Male", "Female", "Other", "male", "female", "other"] || !validator.isURL || about)
+  
+    return isEditAllowed;
+  }catch(err){
+    throw new Error("Invalid Update Request");
+  }
+  
+    
+}
+
+const validatePassword=(newPassword)=>{
+  return validator.isStrongPassword(newPassword);
+}
+module.exports = {validateSignup, validateLogin, validateProfileData, validatePassword};  
