@@ -1,5 +1,7 @@
 const {mongoose,  Schema} = require("mongoose");
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const userSchema = new Schema({
     firstName: {
         type: String,
@@ -34,12 +36,10 @@ const userSchema = new Schema({
     },
     age : {
         type: Number,
-        required: true,
         min : 18,
     },
     gender : {
         type: String,
-        required: true,
         enum: {
             values: ["male", "female", "others"],
             message: "Gender not valid"
@@ -76,5 +76,18 @@ const userSchema = new Schema({
         default : "https://www.linkedin.com/"
     }
 
-}, {timestamps : true})
+}, {timestamps : true});
+
+userSchema.methods.getJWT = async function(){
+    const user = this;
+    const token = await jwt.sign({_id : user._id}, process.env.JWT_SECRET);
+    return token;
+
+}
+userSchema.methods.validatePassword = async function(passwordByUser){
+    const user = this;
+    const isPasswordValid = await bcrypt.compare(passwordByUser, user.password);
+    return isPasswordValid;
+
+}
 module.exports = mongoose.model('User', userSchema);

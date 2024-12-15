@@ -1,3 +1,13 @@
+//get users profile 
+const profile = (req,res)=>{
+    try{
+        const user = req.user;
+        res.status(200).json(user);
+    }catch(err){
+        res.status(404).json({message:err});
+    }
+}
+
 // Feed API -> get all the users from db
 const User = require('../models/users.models');
 const feed = async(req,res)=>{
@@ -66,4 +76,4 @@ const updateUser = async(req,res)=>{
 }
 
 
-module.exports = {getUserbyEmail, feed, deleteUser, updateUser}
+module.exports = {getUserbyEmail, feed, deleteUser, updateUser, profile}

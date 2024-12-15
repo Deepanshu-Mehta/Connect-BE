@@ -1,16 +1,22 @@
-const User = require('../models/users.models');
-
+const User = require('../models/users.models.js');
+const {validateSignup, validateLogin} = require('../utils/validators');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const signup = async (req,res)=>{
     try {
-        const { firstName, lastName, email, password, age, gender } = req.body;
-    
+      //Data Validation
+        validateSignup(req);
+
+      const { firstName, lastName, email, password } = req.body;
+
+      //Password Encryption
+      const hashedPassword = await bcrypt.hash(password, 10);
+      //Create a new user
         const newUser = new User({
           firstName,
           lastName,
           email,
-          password,
-          age,
-          gender,
+          password : hashedPassword
         });
     
         await newUser.save();
@@ -18,22 +24,24 @@ const signup = async (req,res)=>{
         res.send('User created');
       } catch (error) {
         console.error('Error creating user document:', error);
-        res.status(500).send('Error creating user document');
+        res.status(500).send('Error creating user document'+ error);
       }
     
 }
 const login = async(req,res)=>{
     try {
-        const { email, password } = req.body;
-    
-        const user = await User.findOne({ email: email });
+        //validate Input
+        validateLogin(req);
+        const {email, password} = req.body; 
+        const user = await User.findOne({email});
         if (!user) {
           throw new Error("Invalid credentials");
         }
-        const isPasswordValid = await user.validatePassword(password);
+        //compare Password
+        const isPasswordValid = user.validatePassword(password);
     
         if (isPasswordValid) {
-          const token = await user.getJWT();
+          const token = await user.getJWT()
     
           res.cookie("token", token, {
             expires: new Date(Date.now() + 8 * 3600000),
@@ -43,6 +51,7 @@ const login = async(req,res)=>{
           throw new Error("Invalid credentials");
         }
       } catch (err) {
+        console.error('Error logging in user:', err);
         res.status(400).send("ERROR : " + err.message);
       }
 }
