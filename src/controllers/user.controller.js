@@ -1,5 +1,5 @@
 const ConnectionRequest = require("../models/connectionRequest.models");
-const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
+const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills github linkedin";
 
 const User = require('../models/users.models');
 const feed = async(req,res)=>{

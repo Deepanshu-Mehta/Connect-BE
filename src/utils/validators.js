@@ -8,7 +8,7 @@ const validateSignup = (req)=>{
         throw new Error("Name is not Valid");
     }
     if(!validator.isEmail(email)){
-        throw new Error("Email is not Valid");
+        throw new Error("Email is not Valid"); 
     }
     if(!validator.isStrongPassword(password)){
         throw new Error("Password is not Valid");

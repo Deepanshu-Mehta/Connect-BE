@@ -37,15 +37,14 @@ const login = async(req,res)=>{
           throw new Error("Invalid credentials");
         }
         //compare Password
-        const isPasswordValid = user.validatePassword(password);
+        const isPasswordValid = await user.validatePassword(password);
     
         if (isPasswordValid) {
           const token = await user.getJWT()
     
           res.cookie("token", token, {
             expires: new Date(Date.now() + 8 * 3600000),
-          });
-          res.send(user);
+          }).send(user);
         } else {
           throw new Error("Invalid credentials");
         }
