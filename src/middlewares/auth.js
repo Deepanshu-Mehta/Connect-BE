@@ -4,8 +4,9 @@ const User = require('../models/users.models');
 const AuthVerify = async (req, res, next) => {
   try {
     const { token } = req.cookies;
+    // console.log(req.cookies);
     if (!token) {
-      return res.status(401).send("Please login to access this resource.");
+      return res.status(401).send("Please login to access this resource."+ req);
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
