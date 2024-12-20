@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 
 app.use(cors({
-  origin: ['https://connect-fe.onrender.com/'],
+  origin: ['https://connect-fe.onrender.com'],
   credentials: true
 }))
 app.use(express.json());
