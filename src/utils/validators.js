@@ -26,24 +26,21 @@ const validateLogin = (req) => {
     }
   };
 
-const validateProfileData = (req)=>{
-  try{
-    const ALLOWED_FIELDS = ["firstName", "lastName", "age", "gender", "photoUrl", "about", "skills", "github", "linkedin"];
-    const isEditAllowed = Object.keys(req.body).every((field) =>
-      ALLOWED_FIELDS.includes(field)
-    );
-    if(!isEditAllowed){
-      throw new Error("Invalid Field");
-      }
-    // if(firstName.lenght < 3 || age <18 || !gender in ["Male", "Female", "Other", "male", "female", "other"] || !validator.isURL || about)
+  function validateProfileData(data) {
+    if (!data || typeof data !== "object" || Object.keys(data).length === 0) {
+      throw new Error("Invalid Request Body");
+    }
   
-    return isEditAllowed;
-  }catch(err){
-    throw new Error("Invalid Update Request");
+    const ALLOWED_FIELDS = ["firstName", "lastName", "age", "gender", "photoUrl", "about", "skills", "github", "linkedin"];
+    const isEditAllowed = Object.keys(data).every((field) => ALLOWED_FIELDS.includes(field));
+    
+    if (!isEditAllowed) {
+      throw new Error("Invalid Field(s) in Request");
+    }
+    return isEditAllowed
   }
   
-    
-}
+  
 
 const validatePassword=(newPassword)=>{
   return validator.isStrongPassword(newPassword);

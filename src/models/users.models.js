@@ -58,7 +58,7 @@ const userSchema = new Schema({
     about : {
         type: String,
         default : "No description",
-        maxLength : 200,
+        maxLength : 500,
         trim : true,
     },
     skills : {

@@ -12,6 +12,7 @@ const profile = async(req,res)=>{
 
 //edit/update profile
 const profileUpdate = async(req,res)=>{
+    console.log(req.body);
     try{
         const user = req.user;
         if(!validateProfileData(req.body)){
@@ -23,6 +24,7 @@ const profileUpdate = async(req,res)=>{
 
     }catch(err){
         res.status(404).json({message:err});
+        console.log(err)
     }
 
 }
