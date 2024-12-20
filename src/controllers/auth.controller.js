@@ -44,6 +44,9 @@ const login = async(req,res)=>{
     
           res.cookie("token", token, {
             expires: new Date(Date.now() + 8 * 3600000),
+            httpOnly: true,    
+            sameSite: 'None',   
+            secure: true,   
           }).send(user);
         } else {
           throw new Error("Invalid credentials");
