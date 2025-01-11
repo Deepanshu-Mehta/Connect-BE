@@ -43,10 +43,7 @@ const login = async(req,res)=>{
           const token = await user.getJWT()
     
           res.cookie("token", token, {
-            expires: new Date(Date.now() + 8 * 3600000),
-            httpOnly: true,    
-            sameSite: 'None',   
-            secure: true,   
+            expires: new Date(Date.now() + 8 * 3600000)
           }).send(user);
         } else {
           throw new Error("Invalid credentials");
