@@ -2,9 +2,9 @@ const express = require('express');
 require('dotenv').config();
 const connectDB = require('./config/database');
 const app = express();
-const port = 3000;
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: 'https://connect-fe.onrender.com',
@@ -33,8 +33,8 @@ app.use('/api/v1/user', userRouter);
 
 // Connect to the database, then start the server
 connectDB().then(() => {
-  app.listen(port, () =>
-    console.log(`Server listening on port ${port}`)
+  app.listen(PORT, () =>
+    console.log(`Server listening on port ${PORT}`)
   );
 });
 
