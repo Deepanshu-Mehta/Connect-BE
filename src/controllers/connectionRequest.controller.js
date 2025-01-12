@@ -1,6 +1,6 @@
 const ConnectionRequest = require("../models/connectionRequest.models");
 const User = require("../models/users.models");
-const sendEmail = require('../utils/sendEmails');
+// const sendEmail = require('../utils/sendEmails');
 const sendConnectionRequest = async(req,res)=>{
     try{
         const senderUserId = req.user._id;
