@@ -42,11 +42,11 @@ const sendConnectionRequest = async(req,res)=>{
         
         await connectionRequest.save();
 
-        const emailResponse = await sendEmail.run(
-          "A new friend request from " + req.user.firstName,
-          req.user.firstName + " is " + status + " in " + receiverUser.firstName
-        );
-        console.log(emailResponse);
+        // const emailResponse = await sendEmail.run(
+        //   "A new friend request from " + req.user.firstName,
+        //   req.user.firstName + " is " + status + " in " + receiverUser.firstName
+        // );
+        // console.log(emailResponse);
 
         res.status(201).json({
             message: req.user.firstName + " is " + status + " in " + receiverUser.firstName,
